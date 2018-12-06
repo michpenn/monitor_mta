@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Moment from "react-moment";
 import Subway from "./components/subways/Subway";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import testData from "../testdata";
 
 class App extends Component {
   state = {
@@ -45,7 +45,7 @@ class App extends Component {
         name: "5",
         status: "PLANNED WORK",
         startOfLastDelay: null,
-        totalDownMins: 0,
+        totalDownMins: 10,
         timeSinceBeginning: null
       },
       {
@@ -73,7 +73,7 @@ class App extends Component {
         name: "C",
         status: "SERVICE CHANGE",
         startOfLastDelay: null,
-        totalDownMins: 0,
+        totalDownMins: 25,
         timeSinceBeginning: null
       },
       {
@@ -201,8 +201,22 @@ class App extends Component {
       .then(function(response) {
         let updated = response.data.updatedSubways;
         if (updated.length > 0) {
+          // let oldData = this.state.subways.find(subway => {});
           //todo: loop through, copy new status accross, increminent minutes, etc
           console.log("updated: ", updated);
+          updated.forEach(newData => {
+            console.log("new data: ", newData);
+            let oldData = currentSubways.find(subway => {
+              return subway.name === newData.name;
+            });
+            console.log("old data: ", oldData);
+            // console.log("new data: ", newData);
+
+            //update minutes
+            //update time
+            //update status
+            //update state
+          });
         }
       })
       .catch(function(error) {
