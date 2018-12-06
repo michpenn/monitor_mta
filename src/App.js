@@ -1,221 +1,220 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Moment from "react-moment";
 import Subway from "./components/subways/Subway";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends Component {
   state = {
-    subways: []
+    subways: [],
+    timeoutIntervalId: null
   };
 
   componentDidMount() {
     let testData = [
       {
         name: "1",
-        status: "SERVICE CHANGE",
-        date: "12/05/2018",
-        time: " 3:57PM",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "2",
-        status: "SERVICE CHANGE",
-        date: "12/05/2018",
-        time: " 3:57PM",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "3",
-        status: "SERVICE CHANGE",
-        date: "12/05/2018",
-        time: " 3:57PM",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "4",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "5",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "6",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "7",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
         totalDownMins: 0,
-        totalMins: 1000
+        timeSinceBeginning: null
       },
       {
         name: "A",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "SERVICE CHANGE",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "C",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "SERVICE CHANGE",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "E",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "SERVICE CHANGE",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "B",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "DELAYS",
+        startOfLastDelay: "2018-12-06T12:32:00.000",
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "D",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "DELAYS",
+        startOfLastDelay: "2018-12-06T12:32:00.000",
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "F",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "DELAYS",
+        startOfLastDelay: "2018-12-06T12:32:00.000",
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "M",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "DELAYS",
+        startOfLastDelay: "2018-12-06T12:32:00.000",
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "G",
         status: "GOOD SERVICE",
-        date: "",
-        time: "",
+        startOfLastDelay: null,
         totalDownMins: 0,
-        totalMins: 1000
+        timeSinceBeginning: null
       },
       {
         name: "J",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "Z",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "L",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
         totalDownMins: 0,
-        totalMins: 1000
+        timeSinceBeginning: null
       },
       {
         name: "N",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "Q",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "R",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
-        totalDownMins: 10,
-        totalMins: 1000
+        status: "PLANNED WORK",
+        startOfLastDelay: null,
+        totalDownMins: 0,
+        timeSinceBeginning: null
       },
       {
         name: "S",
         status: "GOOD SERVICE",
-        date: "",
-        time: "",
+        startOfLastDelay: null,
         totalDownMins: 0,
-        totalMins: 1000
+        timeSinceBeginning: null
       },
       {
         name: "SIR",
-        status: "GOOD SERVICE",
-        date: "",
-        time: "",
+        status: "DELAYS",
+        startOfLastDelay: "2018-12-06T12:07:00.000",
         totalDownMins: 0,
-        totalMins: 1000
+        timeSinceBeginning: null
       }
     ];
     axios
       .get("/subways")
       .then(res => {
-        console.log("res: ", res);
+        console.log("res: ", res.data.subways);
         this.setState({ subways: res.data.subways });
       })
       .catch(err => {
         console.log("err: ", err);
         this.setState({ subways: testData });
       });
+
+    let intervalId = setInterval(() => {
+      this.checkForUpdates();
+    }, 60000);
+
+    this.setState({ timeoutIntervalId: intervalId });
+  }
+
+  checkForUpdates() {
+    let currentSubways = this.state.subways;
+
+    axios
+      .post("/update", { subways: currentSubways })
+      .then(function(response) {
+        let updated = response.data.updatedSubways;
+        if (updated.length > 0) {
+          //todo: loop through, copy new status accross, increminent minutes, etc
+          console.log("updated: ", updated);
+        }
+      })
+      .catch(function(error) {
+        console.log("error: ", error);
+        /*
+        TODO: Clear Interval if there is an error
+         */
+      });
   }
 
   render() {
-    console.log("state: ", this.state);
     let subways = this.state.subways;
-    // let subways = this.state.subways
-    //   ? this.state.subways.length > 0
-    //     ? this.state.subways
-    //     : this.state.subways.data.subways
-    //   : null;
     return (
       <div className="App">
         <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-0">
